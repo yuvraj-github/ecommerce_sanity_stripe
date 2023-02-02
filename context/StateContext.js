@@ -1,14 +1,34 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { tost } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
     const [showCart, setshowCart] = useState(false);
-    const [cartItems, setcartItems] = useState();
+    const [cartItems, setcartItems] = useState([]);
     const [totalPrice, settotalPrice] = useState();
     const [totalQuantities, settotalQuantities] = useState();
     const [qty, setQty] = useState(1);
+
+    const onAdd = (product, quantity) => {
+        const checkProductInCart = cartItems.find((item) => item._id === product._id);
+        settotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
+        settotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
+
+        if (checkProductInCart) {
+            const updatedCartItems = cartItems.map((cartProduct) => {
+                if (cartProduct._id === product._id) return {
+                    ...cartProduct,
+                    quantity: cartProduct.quantity + quantity
+                }
+            })
+            setcartItems(updatedCartItems);
+        } else {
+            product.quantity = quantity;
+            setcartItems([...cartItems, { ...product }]);
+        }
+        toast.success(`${qty} ${product.name} added to the cart.`);
+    }
 
     const incQty = () => {
         setQty((prevQty) => prevQty + 1);
@@ -28,7 +48,8 @@ export const StateContext = ({ children }) => {
                 totalQuantities,
                 qty,
                 incQty,
-                decQty
+                decQty,
+                onAdd
             }}
         >
             {children}
