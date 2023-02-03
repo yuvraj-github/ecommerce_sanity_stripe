@@ -6,7 +6,7 @@ const Context = createContext();
 export const StateContext = ({ children }) => {
     const [showCart, setshowCart] = useState(false);
     const [cartItems, setcartItems] = useState([]);
-    const [totalPrice, settotalPrice] = useState();
+    const [totalPrice, settotalPrice] = useState(0);
     const [totalQuantities, settotalQuantities] = useState(0);
     const [qty, setQty] = useState(1);
 

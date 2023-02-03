@@ -11,11 +11,11 @@ const Navbar = () => {
       <p className='logo'>
         <Link href='/'>Yuvraj Headphones</Link>
       </p>
-      <button type='button' className='cart-icon' onClick={ () => setshowCart(true)}>
+      <button type='button' className='cart-icon' onClick={() => setshowCart(true)}>
         <AiOutlineShopping />
-        <span className='cart-item-qty'>{ totalQuantities }</span>
+        <span className='cart-item-qty'>{totalQuantities}</span>
       </button>
-      { showCart && < Cart />}
+      {showCart && < Cart />}
     </div>
   )
 }
